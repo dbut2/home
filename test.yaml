@@ -1,0 +1,6 @@
+runtime: php73
+service: test
+
+handlers:
+  - url: /static
+    static_dir: static
