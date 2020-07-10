@@ -1,3 +1,8 @@
+<?php
+    $dir = "static";
+    $images = array_diff(scandir($dir), array('.', '..'));
+    $image = $dir . "/" . $images[array_rand($images)];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +13,7 @@
             left: 0;
             margin: auto;
             max-height: 50%;
-            max-width: 50%;
+            max-width: 80%;
             position: fixed;
             right: 0;
             top: 0;
@@ -17,6 +22,6 @@
     <title>@dbut2</title>
 </head>
 <body>
-<img alt="@dbut2" src="static/d.jpg" />
+<img alt="@dbut2" src="<?=$image?>" />
 </body>
 </html>
