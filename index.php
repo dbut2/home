@@ -7,8 +7,8 @@
             bottom: 0;
             left: 0;
             margin: auto;
-            max-height: 80%;
-            max-width: 80%;
+            max-height: 50%;
+            max-width: 50%;
             position: fixed;
             right: 0;
             top: 0;
