@@ -18,7 +18,7 @@ rebuild: clean build
 
 .PHONY: deploy
 deploy:
-	gcloud app deploy app.yaml shortener.yaml
+	gcloud app deploy app.yaml shortener.yaml dispatch.yaml
 
 .PHONY: server
 server: rebuild
