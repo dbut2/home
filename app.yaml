@@ -1,2 +1,3 @@
 runtime: go112
+service: default
 main: cmd/server

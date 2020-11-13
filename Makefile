@@ -1,16 +1,15 @@
-appname = home
-
 .PHONY: lint
 lint:
 	golangci-lint run -v
 
 .PHONY: build
 build:
-	go build -o $(appname) ./cmd/server
+	go build -o server ./cmd/server
+	go build -o shortener ./cmd/shortener
 
 .PHONY: clean
 clean:
-	rm -f $(appname) coverage.out coverage.html
+	rm -f home shortener coverage.out coverage.html
 	go mod tidy
 	go mod vendor
 
@@ -19,11 +18,15 @@ rebuild: clean build
 
 .PHONY: deploy
 deploy:
-	gcloud app deploy
+	gcloud app deploy app.yaml shortener.yaml
 
-.PHONY: rerun
-rerun: rebuild
-	./$(appname)
+.PHONY: server
+server: rebuild
+	./server
+
+.PHONY: shortener
+shortener: rebuild
+	./shortener
 
 .PHONY: test
 test:
