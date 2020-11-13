@@ -1,6 +1,7 @@
 package site
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/dbut2/home/internal/shortener"
 	"github.com/dbut2/home/pkg/url"
@@ -42,27 +43,35 @@ func (s *Shortener) lengthen(w http.ResponseWriter, r *http.Request) {
 func (s *Shortener) shorten(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		fmt.Println(err)
+		respondError(w, err)
 		return
 	}
-	link, err := url.New(r.FormValue("url"))
+	link := r.FormValue("url")
+	code := r.FormValue("code")
+	if link == "" {
+		respondError(w, fmt.Errorf("url empty"))
+		return
+	}
+	u, err := url.New(r.FormValue("url"))
 	if err != nil {
-		fmt.Println(err)
+		respondError(w, err)
 		return
 	}
-	code, err := s.Shorten(link)
+	code, err = s.Shorten(u, code)
 	if err != nil {
-		fmt.Println(err)
+		respondError(w, err)
 		return
 	}
-	_, err = fmt.Fprintf(w, "Code: %s, Url: %s", code, link.String())
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	respondJSON(w, http.StatusOK, struct {
+		URL  string
+		Code string
+	}{
+		URL:  link,
+		Code: code,
+	})
 }
 
-type Server struct {}
+type Server struct{}
 
 func (s *Server) Run(port string) {
 	r := chi.NewRouter()
@@ -70,5 +79,22 @@ func (s *Server) Run(port string) {
 	err := http.ListenAndServe(":"+port, r)
 	if err != nil {
 		panic(err)
+	}
+}
+
+func respondError(w http.ResponseWriter, err error) {
+	respondJSON(w, http.StatusInternalServerError, err)
+}
+
+func respondJSON(w http.ResponseWriter, status int, v interface{}) {
+	j, err := json.Marshal(v)
+	if err != nil {
+		respondError(w, err)
+		return
+	}
+	w.WriteHeader(status)
+	_, err = w.Write(j)
+	if err != nil {
+		respondError(w, err)
 	}
 }
