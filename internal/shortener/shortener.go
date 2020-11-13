@@ -22,12 +22,20 @@ func NewShortener() (*Shortener, error) {
 	}, nil
 }
 
-func (s *Shortener) Shorten(url url.URL, code string) (string, error) {
+func (s *Shortener) Shorten(u url.URL, code string) (string, error) {
 	if code == "" {
 		code = s.randomCode()
 	}
 	key := datastore.NameKey("urlcode", code, nil)
-	_, err := s.client.Put(context.Background(), key, &url)
+	blank := url.URL{}
+	err := s.client.Get(context.Background(), key, &blank)
+	if err != datastore.ErrNoSuchEntity {
+		if err != nil {
+			return "", err
+		}
+		return "", fmt.Errorf("code taken")
+	}
+	_, err = s.client.Put(context.Background(), key, &u)
 	if err != nil {
 		return "", err
 	}
