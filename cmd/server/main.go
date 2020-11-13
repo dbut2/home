@@ -11,7 +11,6 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-
-	s := site.Server{}
-	s.Run(port)
+	server := site.Server{}
+	server.Run(port)
 }
