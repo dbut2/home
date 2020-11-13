@@ -3,7 +3,6 @@ package shortener
 import (
 	"cloud.google.com/go/datastore"
 	"context"
-	"fmt"
 	"github.com/dbut2/home/pkg/url"
 	"math/rand"
 )
@@ -23,8 +22,10 @@ func NewShortener() (*Shortener, error) {
 	}, nil
 }
 
-func (s *Shortener) Shorten(url url.URL) (string, error) {
-	code := fmt.Sprintf("%d", rand.Int())
+func (s *Shortener) Shorten(url url.URL, code string) (string, error) {
+	if code == "" {
+		code = s.randomCode()
+	}
 	key := datastore.NameKey("urlcode", code, nil)
 	_, err := s.client.Put(context.Background(), key, &url)
 	if err != nil {
@@ -41,4 +42,21 @@ func (s *Shortener) Lengthen(code string) (url.URL, error) {
 		return url.URL{}, err
 	}
 	return u, nil
+}
+
+func (s *Shortener) randomCode() string {
+	u := url.URL{}
+	charset := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	var code string
+	var err error
+	for err != datastore.ErrNoSuchEntity {
+		c := make([]rune, 4)
+		for i := range c {
+			c[i] = charset[rand.Intn(len(charset))]
+		}
+		code = string(c)
+		key := datastore.NameKey("urlcode", code, nil)
+		err = s.client.Get(context.Background(), key, &u)
+	}
+	return code
 }
