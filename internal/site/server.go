@@ -18,7 +18,7 @@ func (s *Shortener) Run(port string) {
 	r := chi.NewRouter()
 
 	r.Get("/*", s.lengthen)
-	r.Post("/shorten", s.shorten)
+	r.Post("/*", s.shorten)
 
 	err := http.ListenAndServe(":"+port, r)
 	if err != nil {
@@ -27,17 +27,13 @@ func (s *Shortener) Run(port string) {
 }
 
 func (s *Shortener) lengthen(w http.ResponseWriter, r *http.Request) {
-
 	code := strings.TrimPrefix(r.URL.Path, "/")
-
 	link, err := s.Lengthen(code)
 	if err != nil {
 		http.Redirect(w, r, "404", http.StatusNotFound)
 		return
 	}
-
 	http.Redirect(w, r, link.String(), http.StatusMovedPermanently)
-
 }
 
 func (s *Shortener) shorten(w http.ResponseWriter, r *http.Request) {
@@ -52,6 +48,9 @@ func (s *Shortener) shorten(w http.ResponseWriter, r *http.Request) {
 		respondError(w, fmt.Errorf("url empty"))
 		return
 	}
+	if code == "" {
+		code = strings.TrimPrefix(r.URL.Path, "/")
+	}
 	u, err := url.New(r.FormValue("url"))
 	if err != nil {
 		respondError(w, err)
@@ -63,8 +62,8 @@ func (s *Shortener) shorten(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	respondJSON(w, http.StatusOK, struct {
-		URL  string
-		Code string
+		URL  string `json:"url"`
+		Code string `json:"code"`
 	}{
 		URL:  link,
 		Code: code,
@@ -75,7 +74,10 @@ type Server struct{}
 
 func (s *Server) Run(port string) {
 	r := chi.NewRouter()
+
 	r.Handle("/*", http.FileServer(http.Dir("./web")))
+	r.Handle("/static/*", http.FileServer(http.Dir("./web")))
+
 	err := http.ListenAndServe(":"+port, r)
 	if err != nil {
 		panic(err)
@@ -83,7 +85,7 @@ func (s *Server) Run(port string) {
 }
 
 func respondError(w http.ResponseWriter, err error) {
-	respondJSON(w, http.StatusInternalServerError, err)
+	respondJSON(w, http.StatusInternalServerError, err.Error())
 }
 
 func respondJSON(w http.ResponseWriter, status int, v interface{}) {
