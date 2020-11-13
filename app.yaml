@@ -1,2 +1,5 @@
-runtime: go112
-main: cmd/server
+runtime: php73
+
+handlers:
+  - url: /static
+    static_dir: static
