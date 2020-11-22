@@ -1,6 +1,0 @@
-dispatch:
-  - url: "dylanbutler.net/*"
-    service: default
-
-  - url: "but.la/*"
-    service: shortener
