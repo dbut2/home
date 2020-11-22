@@ -1,3 +1,2 @@
 runtime: go114
-service: default
 main: cmd/server
