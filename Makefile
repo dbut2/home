@@ -19,8 +19,12 @@ rebuild: clean build
 deploy:
 	gcloud app deploy app.yaml
 
-.PHONY: server
-server: rebuild
+.PHONY: testdeploy
+testdeploy:
+	gcloud app deploy test-app.yaml
+
+.PHONY: run
+run: rebuild
 	./server
 
 .PHONY: test

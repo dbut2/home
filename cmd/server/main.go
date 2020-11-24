@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/dbut2/home/internal/site"
 	"os"
+
+	"github.com/dbut2/home/internal/site"
 )
 
 func main() {
