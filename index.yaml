@@ -1,0 +1,7 @@
+indexes:
+
+- kind: Block
+  ancestor: yes
+  properties:
+  - name: Index
+    direction: asc

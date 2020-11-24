@@ -19,9 +19,13 @@ rebuild: clean build
 deploy:
 	gcloud app deploy app.yaml
 
-.PHONY: server
-server: rebuild
-	./server
+.PHONY: testdeploy
+testdeploy:
+	gcloud app deploy test-app.yaml
+
+.PHONY: run
+run: rebuild
+	./servergo mod tidy
 
 .PHONY: test
 test:
@@ -38,4 +42,5 @@ html:
 
 .PHONY: vendor
 vendor:
+	go mod tidy
 	go mod vendor
