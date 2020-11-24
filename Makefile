@@ -25,7 +25,7 @@ testdeploy:
 
 .PHONY: run
 run: rebuild
-	./server
+	./servergo mod tidy
 
 .PHONY: test
 test:
@@ -42,4 +42,5 @@ html:
 
 .PHONY: vendor
 vendor:
+	go mod tidy
 	go mod vendor
