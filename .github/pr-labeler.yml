@@ -1,0 +1,20 @@
+enhancement:
+  - 'feat/*'
+  - 'feature/*'
+  - 'story/*'
+bug:
+  - 'fix/*'
+  - 'bug/*'
+  - 'bugfix/*'
+documentation:
+  - 'doc/*'
+"tech:task":
+  - 'tech/*'
+  - 'refactor/*'
+  - 'tests/*'
+  - 'test/*'
+security:
+  - 'sec/*'
+  - 'security/*'
+ci:
+  - 'ci/*'

@@ -1,0 +1,31 @@
+name: 'Go Coverage Action'
+description: 'Runs go-acc for accurate test coverage'
+author: 'jamesrom'
+inputs:
+  hard_target:
+    description: 'The minimum coverage acceptable'
+    default: "80"
+  soft_target:
+    description: 'The ideal coverage target, will warn below this. 0 disables the soft target.'
+    required: false
+    default: "0"
+  ignore:
+    description: 'Comma separated list of package paths to ignore'
+    required: false
+    default: ""
+  enable_soft_target_warning:
+    description: 'If the coverage is between soft and hard targets, comment on the triggering PR with a warning message'
+    required: false
+    default: "true"
+  token:
+    description: 'GitHub Personal Access Token'
+    required: true
+outputs:
+  coverage:
+    description: 'Percent total test coverage'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'pie-chart'
+  color: 'gray-dark'
