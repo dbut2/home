@@ -75,7 +75,7 @@ type Block struct {
 func (b Block) Display() template.HTML {
 	switch b.Type {
 	case Image:
-		return template.HTML(fmt.Sprintf("<img src=\"%s\" />", b.Content))
+		return template.HTML(fmt.Sprintf("<img src=\"static/%s\" />", b.Content))
 	case Text:
 		return template.HTML(fmt.Sprintf("<p>%s</p>", b.Content))
 	default:
@@ -96,8 +96,11 @@ func (b Block) Store(client *datastore.Client, parent *datastore.Key) error {
 type BlockType int
 
 const (
-	Image BlockType = iota
+	Undefined BlockType = iota
+
+	HTML
 	Text
+	Image
 )
 
 const (
