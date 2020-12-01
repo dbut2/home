@@ -96,8 +96,11 @@ func (b Block) Store(client *datastore.Client, parent *datastore.Key) error {
 type BlockType int
 
 const (
-	Image BlockType = iota
+	Undefined BlockType = iota
+
+	HTML
 	Text
+	Image
 )
 
 const (
