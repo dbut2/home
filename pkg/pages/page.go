@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/gomarkdown/markdown"
 	"html/template"
 	"net/http"
 
@@ -77,7 +78,9 @@ func (b Block) Display() template.HTML {
 	case Image:
 		return template.HTML(fmt.Sprintf("<img src=\"static/%s\" />", b.Content))
 	case Text:
-		return template.HTML(fmt.Sprintf("<p>%s</p>", b.Content))
+		md := []byte(b.Content)
+		content := markdown.ToHTML(md, nil, nil)
+		return template.HTML(fmt.Sprintf("<p>%s</p>", content))
 	default:
 		return ""
 	}
