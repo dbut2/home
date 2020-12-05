@@ -15,7 +15,7 @@ func main() {
 
 	s, _ := server.FromConfig(&server.Config{
 		Project: "dylanbutler",
-		Admin:   true,
+		Admin:   false,
 	})
 	s.Run(port)
 }
