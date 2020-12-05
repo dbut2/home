@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/dbut2/home/internal/site"
+	"github.com/dbut2/home/internal/server"
 )
 
 func main() {
@@ -12,6 +12,10 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	server := site.Server{}
-	server.Run(port)
+
+	s, _ := server.FromConfig(&server.Config{
+		Project: "dylanbutler",
+		Admin:   false,
+	})
+	s.Run(port)
 }

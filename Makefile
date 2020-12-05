@@ -25,7 +25,7 @@ testdeploy:
 
 .PHONY: run
 run: rebuild
-	./servergo mod tidy
+	./server
 
 .PHONY: test
 test:
