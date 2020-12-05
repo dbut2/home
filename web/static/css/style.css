@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    font-size: 1.5em;
+}
+
+#container > div {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+#container > div > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80vw;
+}
+
+#container > div img {
+    max-height: 50vh;
+}
