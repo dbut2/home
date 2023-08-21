@@ -1,3 +1,0 @@
-runtime: go114
-service: test
-main: cmd/server

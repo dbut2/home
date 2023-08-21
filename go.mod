@@ -1,12 +1,26 @@
 module github.com/dbut2/home
 
-go 1.15
+go 1.21
+
+require github.com/dbut2/cloud-run-reverse-proxy v0.0.0-20230821064359-c04d7ee47b67
 
 require (
-	cloud.google.com/go v0.72.0 // indirect
-	cloud.google.com/go/datastore v1.1.0
-	github.com/go-chi/chi v4.1.2+incompatible
-	github.com/gomarkdown/markdown v0.0.0-20201113031856-722100d81a8e
-	golang.org/x/net v0.0.0-20201110031124-69a78807bb2b // indirect
-	golang.org/x/tools v0.0.0-20201111224557-41a3a589386c // indirect
+	cloud.google.com/go/compute v1.19.0 // indirect
+	cloud.google.com/go/compute/metadata v0.2.3 // indirect
+	github.com/dbut2/reverse-proxy v0.0.0-20230821084108-1874ae2d05be // indirect
+	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
+	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/google/s2a-go v0.1.0 // indirect
+	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
+	go.opencensus.io v0.24.0 // indirect
+	golang.org/x/crypto v0.1.0 // indirect
+	golang.org/x/net v0.9.0 // indirect
+	golang.org/x/oauth2 v0.7.0 // indirect
+	golang.org/x/sys v0.7.0 // indirect
+	golang.org/x/text v0.9.0 // indirect
+	google.golang.org/api v0.118.0 // indirect
+	google.golang.org/appengine v1.6.7 // indirect
+	google.golang.org/genproto v0.0.0-20230403163135-c38d8f061ccd // indirect
+	google.golang.org/grpc v1.54.0 // indirect
+	google.golang.org/protobuf v1.30.0 // indirect
 )
