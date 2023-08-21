@@ -13,11 +13,10 @@ func main() {
 		port = "8080"
 	}
 
-	selectors := []rp.Selector{
-		rp.Select("https://shortener-prod-hqkniphctq-km.a.run.app/shorten", rp.PathRule("/shorten")),
-		rp.Select("https://dylanbutler-dev.web.app", rp.BaseRule()),
-	}
-	proxy := rp.New(selectors...)
+	proxy := rp.New(
+		rp.Select("https://shortener-prod-hqkniphctq-km.a.run.app/shorten", rp.PathIsAt("/shorten")),
+		rp.Select("https://dylanbutler-dev.web.app", rp.Always()),
+	)
 
 	err := http.ListenAndServe(":"+port, proxy)
 	if err != nil {
