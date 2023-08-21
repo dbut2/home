@@ -14,7 +14,7 @@ func main() {
 	}
 
 	selectors := []rp.Selector{
-		rp.Select("https://but.la/shorten", rp.PathRule("/shorten")),
+		rp.Select("https://shortener-prod-hqkniphctq-km.a.run.app/shorten", rp.PathRule("/shorten")),
 		rp.Select("https://dylanbutler-dev.web.app", rp.BaseRule()),
 	}
 	proxy := rp.New(selectors...)
